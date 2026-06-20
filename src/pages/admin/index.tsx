@@ -85,7 +85,7 @@ export default function AdminDashboard({
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
       }`}
     >
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-8 items-start">``
         <div className="w-full lg:w-64 shrink-0">
             <AdminSidebar />
         </div>
