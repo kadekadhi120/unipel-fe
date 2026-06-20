@@ -3,37 +3,45 @@ import React, { useState } from 'react';
 interface LoginPopupProps {
   isOpen: boolean;  
   onClose: () => void;
-  onLogin: (credentials: { email: string; password: string; phone?: string }) => void;
+  onLogin: (credentials: { email: string; password: string; }) => void;
 }
 
 const LoginPopup: React.FC<LoginPopupProps> = ({ isOpen, onClose, onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-
-  if (!isOpen) return null;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onLogin({ email, password, phone });
+    onLogin({ email, password });
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6">
+    <div 
+      // PERBAIKAN 1: Tambahkan 'flex'.
+      // PERBAIKAN 2: Hapus typo, dan fokuskan div luar untuk opacity/visibility saja.
+      className={`fixed inset-0 z-50 flex items-center justify-center px-4 py-6 transition-all duration-300 ease-in-out ${
+        isOpen ? 'visible opacity-100' : 'invisible opacity-0'
+      }`}
+    >
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
+      
       <form
         onSubmit={handleSubmit}
-        className="relative z-10 w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl"
+        // PERBAIKAN 3: Pindahkan logika translate-y ke form ini, ditambah transisinya
+        className={`relative z-10 w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl transition-all duration-300 ease-in-out ${
+          isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+        }`}
       >
         <button
           type="button"
           onClick={onClose}
           className="absolute right-4 top-4 text-zinc-400 hover:text-white"
         >
-          �
+          {/* PERBAIKAN 4: Mengganti karakter error  menjadi X */}
+          X
         </button>
 
         <h2 className="text-2xl font-bold mb-6 text-center">
@@ -47,7 +55,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ isOpen, onClose, onLogin }) => 
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input-dark"
+              className="input-dark w-full"
               placeholder="nama@email.com"
               required
             />
@@ -58,19 +66,9 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ isOpen, onClose, onLogin }) => 
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="input-dark"
-              placeholder="��������"
+              className="input-dark w-full"
+              placeholder="******"
               required
-            />
-          </div>
-          <div>
-            <label className="block text-sm text-zinc-400 mb-2">Telepon (opsional)</label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="input-dark"
-              placeholder="0812xxxxxxx"
             />
           </div>
           <button

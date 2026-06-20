@@ -12,6 +12,7 @@ import { Product, Order, Script } from '@/types';
 import {ProductDetail} from '@/components/card/ProductDetail';
 import {ScriptGrid} from '@/components/card/ScriptGrid';
 import LoginPopup from '@/components/auth/loginpopup';
+import RegisterPopup from '@/components/auth/registerpopup';
 
 
 
@@ -160,6 +161,17 @@ export default function Home() {
   });
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState<boolean>(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState<boolean>(false);
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 10); // 10ms sudah cukup
+    
+    return () => clearTimeout(timer);
+  }, []);
 
 
   const showNotification = (message: string) => {
@@ -193,10 +205,11 @@ export default function Home() {
     setCurrentPage('home');
   };
 
-  const handleRegister = (data: { name: string; email: string; password: string }) => {
+  const handleRegister = (data: { name: string; email: string; password: string; phone: string }) => {
     // Mock register - replace with actual registration
     console.log('Register:', data);
     showNotification('Registrasi berhasil!');
+    setIsRegisterPopupOpen(false);
     setCurrentPage('home');
   };
 
@@ -218,25 +231,34 @@ export default function Home() {
     setIsLoginPopupOpen(false);
   };
 
-  return (
-    <div className="relative">
-      <div className={isLoginPopupOpen ? 'pointer-events-none blur-sm' : ''}>
-        <Navbar onShowPage={handleShowPage} onLoginClick={handleLoginPopupOpen} />
-        <div className="pt-20">
-          <Notification
-            message={notification.message}
-            isVisible={notification.visible}
-            onClose={() => setNotification({ message: '', visible: false })}
-          />
+  const handleRegisterPopupOpen = () => {
+    setIsRegisterPopupOpen(true);
+  }
 
-          {/* <AIModal
-            isOpen={isAIModalOpen}
-            onClose={() => setIsAIModalOpen(false)}
-          />
+  const handleRegisterPopupClose = () => {
+    setIsRegisterPopupOpen(false);
+  }
 
-          <AIFab onClick={() => setIsAIModalOpen(true)} /> */}
+ return (
+    <div className="relative overflow-hidden">
+      
+      {/* --- 3. PENERAPAN KELAS TRANSISI PADA WRAPPER UTAMA --- 
+        Durasi dibuat sedikit lebih lama (700ms) agar terasa elegan
+      */}
+      <div 
+        className={`pt-20 transition-all duration-700 ease-out transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`}
+      >
+        <Notification
+          message={notification.message}
+          isVisible={notification.visible}
+          onClose={() => setNotification({ message: '', visible: false })}
+        />
 
-          <BannerCarousel />
+        <BannerCarousel />
+        
+        <div className="flex flex-col gap-8 pb-12">
           <ScriptGrid 
             scripts={scripts} 
             onScriptClick={handleScriptClick} 
@@ -246,15 +268,11 @@ export default function Home() {
             onProductClick={handleProductClick}
           />
           <AboutSection />
-          <Footer />
         </div>
+        
+        <Footer />
       </div>
 
-      <LoginPopup
-        isOpen={isLoginPopupOpen}
-        onClose={handleLoginPopupClose}
-        onLogin={handleLogin}
-      />
     </div>
   );
 }

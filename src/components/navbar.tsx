@@ -6,9 +6,10 @@ import AuthButton from './button/auth-button';
 interface NavbarProps {
   onShowPage: (page: string) => void;
   onLoginClick: () => void;
+  onRegisterClick: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onShowPage, onLoginClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onShowPage, onLoginClick, onRegisterClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
@@ -42,18 +43,12 @@ const Navbar: React.FC<NavbarProps> = ({ onShowPage, onLoginClick }) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <button
-          onClick={() => onShowPage('admin-dashboard')}
-          className="text-zinc-400 hover:text-red-500 text-sm font-semibold transition-colors mr-4"
-        >
-          <i className="fas fa-user-shield mr-1"></i> Admin
-        </button>
         <AuthButton
           onClick={onLoginClick}
           name="Login"
         />
         <AuthButton
-          onClick={() => onShowPage('register')}
+          onClick={onRegisterClick}
           name="Register"
         />
       </div>

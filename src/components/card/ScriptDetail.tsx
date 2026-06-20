@@ -1,18 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Script } from '@/types';
 import CustomButton from '../button/custom-button';
-import {Copy} from 'lucide-react';
+import { Copy } from 'lucide-react';
 
 interface ScriptDetailProps {
   script: Script;
   onBack: () => void;
 }
 
-
 export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
   const [aiInsight, setAiInsight] = useState<string | null>(null);
   const [showAiInsight, setShowAiInsight] = useState(false);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
+  
+  // 1. Tambahkan state untuk mengontrol animasi masuk (mount)
+  const [isVisible, setIsVisible] = useState(false);
+
+  // 2. Gunakan useEffect untuk memicu animasi tepat setelah komponen di-render
+  useEffect(() => {
+    // Memberikan sedikit jeda memastikan DOM sudah siap sebelum animasi berjalan
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 10); // 10ms sudah cukup
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(script.description);
@@ -29,12 +42,20 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
+    <div 
+      // 3. Tambahkan logika pengkondisian class di sini
+      className={`max-w-7xl mx-auto px-6 py-12 transition-all duration-500 ease-in-out transform ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
       <CustomButton
         onclick={onBack}
         name="Kembali ke Home"
       />
-      <div className="grid-cgridols-1 lg:grid-cols-1 gap-12 pt-6">
+      
+      {/* 4. Typo grid-cgridols-1 sudah diperbaiki di sini */}
+      <div className="grid-cols-1 lg:grid-cols-1 gap-12 pt-6">
+        
         {/* Left: Info */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8">
           <div className="rounded-xl overflow-hidden mb-6 bg-zinc-800 shadow-2xl w-full h-96">
@@ -53,7 +74,7 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
 
           {/* AI Insight Area */}
           {showAiInsight && aiInsight && (
-            <div className="mb-6 p-4 bg-red-900/10 border border-red-900/30 rounded-xl">
+            <div className="mb-6 p-4 bg-red-900/10 border border-red-900/30 rounded-xl animate-fade-in">
               <div className="flex items-center gap-2 mb-2">
                 <i className="fas fa-robot text-red-500 text-sm"></i>
                 <span className="text-xs font-bold uppercase tracking-wider text-red-500">NexAI Insight</span>
@@ -64,8 +85,6 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
 
           <div className="border-t border-zinc-800 pt-6">
             <h4 className="font-bold mb-3 text-zinc-300">Deskripsi Script</h4>
-
-            {/* <p className="text-zinc-400 leading-relaxed">{script.description}</p> */}
             <div className="relative">
               <div className="px-4 py-3 bg-zinc-400/10 border border-zinc-400/30 rounded-lg">
               <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">{script.description}</p>
@@ -79,7 +98,7 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
           </div>
         </div>
 
-        </div>
       </div>
+    </div>
   );
 }
