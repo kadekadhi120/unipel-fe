@@ -13,15 +13,12 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
   const [showAiInsight, setShowAiInsight] = useState(false);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
   
-  // 1. Tambahkan state untuk mengontrol animasi masuk (mount)
   const [isVisible, setIsVisible] = useState(false);
 
-  // 2. Gunakan useEffect untuk memicu animasi tepat setelah komponen di-render
   useEffect(() => {
-    // Memberikan sedikit jeda memastikan DOM sudah siap sebelum animasi berjalan
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 10); // 10ms sudah cukup
+    }, 10);
     
     return () => clearTimeout(timer);
   }, []);

@@ -18,7 +18,7 @@ interface AdminSidebarProps {
 export const defaultSidebarItems: SidebarItem[] = [
   { label: "Dashboard", href: "/admin", icon: "fas fa-home" },
   { label: "Products", href: "/admin/products", icon: "fas fa-box" },
-  { label: "Orders", href: "/admin/orders", icon: "fas fa-shopping-cart" },
+  { label: "Script", href: "/admin/scripts", icon: "fas fa-code" },
   { label: "Categories", href: "/admin/categories", icon: "fas fa-tags" },
   { label: "Customers", href: "/admin/customers", icon: "fas fa-users" },
   { label: "Settings", href: "/admin/settings", icon: "fas fa-cog" },

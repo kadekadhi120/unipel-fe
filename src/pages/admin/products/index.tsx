@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Product, Order } from '@/types';
 import AdminSidebar from '@/components/admin/sidebar';
 import { Pen, Trash } from 'lucide-react';
-import PopUpCreateProductModel from '@/components/admin/popupmodel/PopUpCreateProductModel';
-import PopUpEditProductModel from '@/components/admin/popupmodel/PopUpEditProductModel';
+import PopUpCreateProductModel from '@/components/admin/popupmodel/Products/PopUpCreateProductModel';
+import PopUpEditProductModel from '@/components/admin/popupmodel/Products/PopUpEditProductModel';
 import PopUpConfirmation from '@/components/admin/popupmodel/PopUpConfirmation';
 
 

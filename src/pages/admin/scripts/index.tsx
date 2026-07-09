@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Script, Order } from '@/types';
 import AdminSidebar from '@/components/admin/sidebar';
 import { Pen, Trash } from 'lucide-react';
+import PopUpCreateScriptModel from '@/components/admin/popupmodel/Scripts/PopUpCreateScriptModel';
 import PopUpConfirmation from '@/components/admin/popupmodel/PopUpConfirmation';
 
 
@@ -43,22 +44,22 @@ export default function ScriptPage({
   const [selectedScript, setSelectedScript] = useState<Script | null>(null);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
-  const handleCreateScript = (data: { name: string; description: string; price: number; stock: number; imageUrl: File | null }) => {
+  const handleCreateScript = (data: { name: string; description: string; loadstring: string; category: string; imageUrl: File | null }) => {
     // Logika untuk menambahkan produk baru ke daftar produk
-    console.log('Produk baru dibuat:', data);
+    console.log('Script baru dibuat:', data);
     setIsCreateScriptOpen(false);
   }
 
-  const handleEditScript = (ScriptId: string, data: { name: string; description: string; price: number; stock: number; imageUrl: File | null }) => {
+  const handleEditScript = (ScriptId: string, data: { name: string; description: string; loadstring: string; category: string; imageUrl: File | null }) => {
     // Logika untuk mengedit produk yang ada
 
-    console.log(`Produk dengan ID ${ScriptId} diedit:`, data);
+    console.log(`Script dengan ID ${ScriptId} diedit:`, data);
     setIsEditScriptOpen(false);
   }
 
   const handleDeleteScript = (ScriptId: string) => {
     // Logika untuk menghapus produk dari daftar produk
-    console.log(`Produk dengan ID ${ScriptId} dihapus`);
+    console.log(`Script dengan ID ${ScriptId} dihapus`);
     setIsDeleteConfirmationOpen(false);
   }
 
@@ -95,22 +96,22 @@ export default function ScriptPage({
         <div className="space-y-6 animate-in fade-in duration-500 slide-in-from-bottom-4">
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-xl">
             <div className="p-6 border-b border-zinc-800 flex justify-between items-center bg-zinc-900/50">
-              <h3 className="font-bold">Daftar Inventaris Produk</h3>
+              <h3 className="font-bold">Script Inventory</h3>
               <button 
                 className="bg-red-600 text-xs font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
                 onClick={() => setIsCreateScriptOpen(true)}
               >
-                <i className="fas fa-plus mr-2"></i> Tambah Produk Baru
+                <i className="fas fa-plus mr-2"></i> Create New Script
               </button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-black/20 text-zinc-500 text-xs uppercase tracking-wider">
-                    <th className="p-4 font-semibold">Produk</th>
+                    <th className="p-4 font-semibold">Script</th>
                     <th className="p-4 font-semibold">Kategori</th>
-                    <th className="p-4 font-semibold"></th>
-                    <th className="p-4 font-semibold text-center">Stok</th>
+                    <th className="p-4 font-semibold">Deskripsi</th>
+                    <th className="p-4 font-semibold text-center">Load String</th>
                     <th className="pr-8 font-semibold text-right">Aksi</th>
                     
                   </tr>
@@ -129,6 +130,12 @@ export default function ScriptPage({
                         </div>
                       </td>
                       <td className="p-4 text-zinc-500">{Script.category}</td>
+                      <td className="p-4 text-zinc-500">{Script.description}</td>
+                      <td className="p-4 text-center">
+                        <span className="bg-zinc-800 text-zinc-400 text-xs font-mono py-1 px-2 rounded">
+                          {Script.loadstring}
+                        </span>
+                      </td>
                       <td className="p-4 text-right">
                         <button 
                           className="text-zinc-500 hover:text-red-500 mr-3 transition-colors"
@@ -160,6 +167,12 @@ export default function ScriptPage({
    
     </div>
     </div>
+
+    <PopUpCreateScriptModel
+      isOpen={isCreateScriptOpen}
+      onClose={() => setIsCreateScriptOpen(false)}
+      onSubmit={handleCreateScript}
+    />
 
     <PopUpConfirmation
       isOpen={isDeleteConfirmationOpen}
