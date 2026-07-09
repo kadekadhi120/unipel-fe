@@ -11,7 +11,6 @@ import RegisterPopup from "@/components/auth/registerpopup";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   
-  // State untuk mengontrol Popup diatur secara global di sini
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
 
@@ -38,7 +37,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {/* Navbar global dengan props yang benar */}
       <Navbar 
         onShowPage={handleShowPage}
         onLoginClick={() => setIsLoginPopupOpen(true)}
@@ -49,7 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
 
-      {/* Popup global, bisa dipanggil dari halaman manapun! */}
       <LoginPopup
         isOpen={isLoginPopupOpen}
         onClose={() => setIsLoginPopupOpen(false)}

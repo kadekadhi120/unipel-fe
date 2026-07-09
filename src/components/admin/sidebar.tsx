@@ -28,7 +28,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ items = defaultSidebarItems
   const router = useRouter(); // Untuk mendeteksi halaman mana yang sedang aktif
 
   return (
-    // 4. Menerapkan gaya Tailwind CSS agar senada dengan halaman Admin
+
     <aside className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-xl h-full">
       <div className="p-6 border-b border-zinc-800 bg-zinc-900/50">
         <h2 className="text-xl font-bold text-white">
