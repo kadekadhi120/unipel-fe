@@ -10,6 +10,7 @@ const mockScripts = [
     name: 'Script A',
     description: 'Script untuk automasi tugas harian.',
     category: 'Automation',
+    loadstring: 'console.log("Hello World");',
     imageUrl: 'https://images.unsplash.com/photo-1581093588401-9c8b0e5a7c8e?w=800',
     createdAt: '2024-01-01'
   },
@@ -18,6 +19,7 @@ const mockScripts = [
     name: 'Script B',
     description: 'Script untuk analisis data cepat.',
     category: 'Data Analysis',
+    loadstring: 'console.log("Hello World");',
     imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800',
     createdAt: '2024-01-01'
   }];

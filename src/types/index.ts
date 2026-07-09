@@ -11,6 +11,7 @@ export interface Script {
   id: string;
   name: string;
   description: string;
+  loadstring: string;
   category: string;
   imageUrl: string;
   createdAt: string;

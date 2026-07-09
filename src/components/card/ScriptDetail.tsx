@@ -28,7 +28,7 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(script.description);
+      await navigator.clipboard.writeText(script.loadstring);
       alert('Script berhasil disalin ke clipboard!');
     } catch (err) {
       console.error('Failed to copy text: ', err);
@@ -85,12 +85,13 @@ export function ScriptDetail({ script, onBack }: ScriptDetailProps) {
 
           <div className="border-t border-zinc-800 pt-6">
             <h4 className="font-bold mb-3 text-zinc-300">Deskripsi Script</h4>
-            <div className="relative">
+            <p className="text-zinc-400 text-sm leading-relaxed">{script.description}</p>
+            <div className="relative mt-2">
               <div className="px-4 py-3 bg-zinc-400/10 border border-zinc-400/30 rounded-lg">
-              <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">{script.description}</p>
+              <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">{script.loadstring}</p>
               </div>
               <Copy 
-                className="absolute top-3.5 right-2 text-zinc-400 cursor-pointer hover:text-zinc-200 transition-colors"
+                className="absolute top-3.5 right-5 text-zinc-400 cursor-pointer hover:text-zinc-200 transition-colors"
                 size={18}
                 onClick={handleCopy}
               />
